@@ -18,7 +18,7 @@ public class Test6 extends BaseTest {
 
         //Validate Page Title
         Assert.assertTrue(title.contains("Courses"));
-        PlaywrightAssertions.assertThat(page).hasTitle("Learn Automation Courses");
+        PlaywrightAssertions.assertThat(page).hasTitle("Learnd Automation Courses");
 
         page.waitForTimeout(1500);
 
