@@ -39,8 +39,6 @@ public class Test5 extends BaseTest {
 
         PlaywrightAssertions.assertThat(newPage.locator("xpath=//td[normalize-space()='Test 1']")).isVisible();
 
-        newPage.close();
-        browser.close();
     }
 
     @Description("Update and Delete Category")
@@ -86,7 +84,5 @@ public class Test5 extends BaseTest {
 
         PlaywrightAssertions.assertThat(newPage.locator("xpath=//td[normalize-space()='Test 2']")).not().isVisible();
 
-        newPage.close();
-        browser.close();
     }
 }

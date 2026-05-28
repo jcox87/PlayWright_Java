@@ -26,6 +26,15 @@ public class BaseTest {
        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setSlowMo(1000));
        context = browser.
                newContext(new Browser.NewContextOptions().setRecordVideoDir(Paths.get("videos/")).setRecordVideoSize(800,600));
+
+       //Start Tracing
+       context.tracing().start(
+               new Tracing.StartOptions()
+                       .setScreenshots(true)
+                       .setSnapshots(true)
+                       .setSources(true)
+       );
+
        page = context.newPage();
        pages = new PageManager(page);
    }
@@ -33,20 +42,32 @@ public class BaseTest {
    @AfterMethod
    public void teardown(ITestResult result){
 
-       // Take screenshot on failure
-       if (ITestResult.FAILURE == result.getStatus()) {
+       boolean failed = result.getStatus() == ITestResult.FAILURE;
+
+       // Screenshot on failure
+       if (failed) {
            AllureAttachments.attachScreenshot(page, result.getName() + "_failure");
        }
 
-       // Close page first so video is finalized
+       // Stop tracing BEFORE closing context/page
+       if (failed) {
+           Path tracePath = Paths.get("traces/" + result.getName() + "_trace.zip");
+           context.tracing().stop(new Tracing.StopOptions().setPath(tracePath));
+           AllureAttachments.attachTrace(tracePath);
+       } else {
+           context.tracing().stop();
+       }
+
+       // Close page (this finalizes video)
        page.close();
 
        // Attach video on failure
-       if (ITestResult.FAILURE == result.getStatus()) {
+       if (failed) {
            Path videoPath = page.video().path();
            AllureAttachments.attachVideo(videoPath);
        }
 
+       // Now safe to close context + browser
        context.close();
        browser.close();
    }
