@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="All Test Suite" parallel="methods" thread-count="1">
+    <test name="Assignments Suite" verbose="2" preserve-order="true">
+        <classes>
+
+            <class name="Assignments.Test1">
+                <methods>
+                    <include name="PageValidation"/>
+                </methods>
+            </class>
+
+            <class name="Assignments.Test2">
+                <methods>
+                    <include name="ValidateLogInandLogOut"/>
+                </methods>
+            </class>
+
+            <class name="Assignments.Test3">
+                <methods>
+                    <include name="RegisterNewUser"/>
+                </methods>
+            </class>
+
+            <class name="Assignments.Test4">
+                <methods>
+                    <include name="CreateAndDeleteNewCourse"/>
+                </methods>
+            </class>
+
+            <class name="Assignments.Test5">
+                <methods>
+                    <include name="AssignmentAddCategory"/>
+                    <include name="AssignmentUpdateAndDeleteCategory"/>
+                </methods>
+            </class>
+
+            <class name="Assignments.Test6">
+                <methods>
+                    <include name="FailScreeShotValidation"/>
+                </methods>
+            </class>
+
+        </classes>
+    </test>
+</suite>
